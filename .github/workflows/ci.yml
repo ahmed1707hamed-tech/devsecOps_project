@@ -1,4 +1,4 @@
-name: CI
+name: DevSecOps CI/CD
 
 on:
   push:
@@ -9,7 +9,12 @@ on:
     branches:
       - main
 
+
 jobs:
+
+  # =========================
+  # 1. TEST
+  # =========================
   test:
 
     runs-on: ubuntu-latest
@@ -37,26 +42,124 @@ jobs:
 
     steps:
 
-      - name: Checkout code
+      - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Set up Python
+      - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
-      - name: Install dependencies
+      - name: Install Dependencies
         working-directory: backend
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run tests
+      - name: Run Tests
         working-directory: backend
         run: |
           pytest -v
+
+
+  # =========================
+  # 2. SECRET SCAN
+  # =========================
+  gitleaks:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Gitleaks Secret Scan
         uses: gitleaks/gitleaks-action@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
+  # =========================
+  # 3. DEPENDENCY SCAN
+  # =========================
+  dependency-scan:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install pip-audit
+        run: |
+          python -m pip install --upgrade pip
+          pip install pip-audit
+
+      - name: Scan Python Dependencies
+        working-directory: backend
+        run: |
+          pip-audit -r requirements.txt
+
+
+  # =========================
+  # 4. DOCKER BUILD
+  # =========================
+  docker-build:
+
+    needs:
+      - test
+      - gitleaks
+      - dependency-scan
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Build Docker Image
+        run: |
+          docker build \
+            -t devsecops-backend:${{ github.sha }} \
+            ./backend
+
+
+  # =========================
+  # 5. TRIVY IMAGE SCAN
+  # =========================
+  trivy:
+
+    needs:
+      - docker-build
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Build Docker Image
+        run: |
+          docker build \
+            -t devsecops-backend:${{ github.sha }} \
+            ./backend
+
+      - name: Trivy Vulnerability Scan
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: devsecops-backend:${{ github.sha }}
+          format: table
+          exit-code: 1
+          ignore-unfixed: true
+          severity: CRITICAL,HIGH
