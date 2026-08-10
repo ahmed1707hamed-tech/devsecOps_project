@@ -3,7 +3,7 @@ uvicorn[standard]
 sqlalchemy
 psycopg2-binary
 pydantic[email]
-python-jose
+PyJWT
 pwdlib[argon2]
 pytest
 httpx

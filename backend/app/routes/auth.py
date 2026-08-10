@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
-from jose import jwt
+import jwt
 from pwdlib import PasswordHash
 
 from app.database import get_db
