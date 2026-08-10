@@ -1,0 +1,39 @@
+from pydantic import BaseModel, ConfigDict, EmailStr
+
+
+class UserCreate(BaseModel):
+    email: EmailStr
+    password: str
+
+
+class UserResponse(BaseModel):
+    id: int
+    email: EmailStr
+
+    model_config = ConfigDict(from_attributes=True)
+
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+
+class TaskCreate(BaseModel):
+    title: str
+    description: str | None = None
+
+
+class TaskResponse(BaseModel):
+    id: int
+    title: str
+    description: str | None
+    completed: bool
+    user_id: int
+
+    model_config = ConfigDict(from_attributes=True)
+
+
+class TaskUpdate(BaseModel):
+    title: str | None = None
+    description: str | None = None
+    completed: bool | None = None
