@@ -81,7 +81,7 @@ The Kubernetes environment is monitored using **Prometheus and Grafana**.
 # 🏗️ Architecture
 
 <p align="center">
-<img src="docs/images/architecture-diagram.png" width="100%">
+<img src="docs/images/architecture.png" width="100%">
 </p>
 
 The architecture follows this flow:
@@ -126,7 +126,7 @@ Grafana
 # 🔄 DevSecOps Workflow
 
 <p align="center">
-<img src="docs/images/devsecops-workflow.png" width="100%">
+<img src="docs/images/github-actions-pipeline.png width="100%">
 </p>
 
 The complete DevSecOps workflow is:
@@ -417,7 +417,7 @@ Helm allows the Kubernetes environment to be configured without modifying the un
 # 🔄 GitOps with Argo CD
 
 <p align="center">
-<img src="docs/images/argocd-dashboard.png" width="100%">
+<img src="docs/images/argocd.png" width="100%">
 </p>
 
 Argo CD is used to implement the GitOps deployment model.
@@ -830,25 +830,20 @@ HEALTH STATUS: Healthy
 ## 🏗️ Architecture Diagram
 
 <p align="center">
-<img src="docs/images/architecture-diagram.png" width="100%">
+<img src="docs/images/architecture.png" width="100%">
 </p>
 
 ## 🔄 DevSecOps Workflow
 
 <p align="center">
-<img src="docs/images/devsecops-workflow.png" width="100%">
-</p>
-
-## ⚙️ GitHub Actions CI/CD
-
-<p align="center">
 <img src="docs/images/github-actions-pipeline.png" width="100%">
 </p>
+
 
 ## 🔄 Argo CD
 
 <p align="center">
-<img src="docs/images/argocd-dashboard.png" width="100%">
+<img src="docs/images/argocd.png" width="100%">
 </p>
 
 ## 🔎 Prometheus
