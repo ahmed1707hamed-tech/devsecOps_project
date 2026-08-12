@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🍔 DevSecOps Pipeline Project
+# 🍔 Food Delivery Application Monitoring Framework
 ### Cloud-Native Monitoring & Observability Stack on AWS
 
 <p align="center">
@@ -30,20 +30,19 @@ Production-ready, cloud-native monitoring stack providing end-to-end observabili
 - Cloud Engineering Workflow
 - Infrastructure Provisioning
 - Configuration Management
-- Kubernetes & Telemetry Deployment
+- CI Pipeline Security (DevSecOps)
+- GitOps Continuous Delivery
+- Kubernetes Deployment & Resources
 - Monitoring & Observability
 - Visual Dashboards & Verification
-- User Request & Metric Flow
 - Deployment Guide
-- Features
-- Future Improvements
 - Author
 
 ---
 
 # 🚀 Overview
 
-This project implements an automated, scalable infrastructure and localized monitoring framework for a food delivery platform. 
+This project implements an automated, scalable infrastructure and localized monitoring framework for a food delivery platform.
 
 The entire cloud architecture is provisioned on **AWS EC2** hosting a lightweight **K3s Kubernetes Cluster**. The system relies on Terraform for infrastructure as code, Ansible for automated system configuration, and a dedicated, production-grade telemetry pipeline built using Prometheus and Grafana to track runtime environments dynamically.
 
@@ -52,23 +51,8 @@ The entire cloud architecture is provisioned on **AWS EC2** hosting a lightweigh
 # 🏗 Architecture
 
 <p align="center">
-  <img src="docs/images/architecture.png" alt="Architecture Diagram" width="100%">
+  <img src="docs/images/architecture.png" alt="DevSecOps Architecture Diagram" width="100%">
 </p>
-
----
-
-# ⚡ Technology Stack
-
-| Layer | Technologies |
-| :--- | :--- |
-| **Infrastructure** | Terraform |
-| **Configuration** | Ansible |
-| **Orchestration** | K3s Kubernetes |
-| **Containers** | Docker |
-| **Ingress Control** | NGINX Ingress |
-| **Telemetry & Collection** | Prometheus |
-| **Visualization** | Grafana |
-| **Cloud Provider** | AWS (EC2, VPC, Security Groups) |
 
 ---
 
@@ -83,106 +67,39 @@ devsecops-project
 ├── monitoring/         # Prometheus & Grafana Configuration Files
 └── docs/
     └── images/         # Documentation & Dashboard Screenshots
+🔒 CI Pipeline Security (DevSecOps)
+Every commit triggers a secure GitHub Actions pipeline that enforces "Shift-Left" security testing before artifact creation:
 
-````
+SAST: Source code analysis.
 
-Cloud Engineering Workflow
+Secret Scanning: Detecting hardcoded credentials.
 
-Terraform Infrastructure Provisioning
-                 │
-                 ▼
-Ansible Cluster Node Configuration
-                 │
-                 ▼
-K3s Kubernetes Cluster Deployment
-                 │
-                 ▼
-Target Application Framework Initialization
-                 │
-                 ▼
-Prometheus & Grafana Localized Stack Launch
-                 │
-                 ▼
-Active Metrics Scraping & Dashboard Visualization
+Dependency Audit: Scanning for vulnerable packages.
 
+Container Image Scan: Auditing Docker images before pushing to registry.
 
+🔄 GitOps Continuous Delivery
+Automated deployment is managed via Argo CD, maintaining the desired state of the Kubernetes cluster directly from Git configuration:
 
-Infrastructure Provisioning
-Cloud infrastructure automation is fully handled via Terraform, deploying isolated network environments on AWS:
+☸ Kubernetes Deployment & Resources
+The application platform and monitoring layers run inside the managed K3s cluster ecosystem, utilizing declarative manifests for resources:
 
-VPC & Subnets: Custom public and private network spaces.
+Self-Healing: Deployments ensuring high availability.
 
-Gateways & Routing: Internet Gateways linked with active Route Tables.
+Traffic Management: NGINX Ingress configuration securely routing paths.
 
-Firewalls: Dynamic Security Groups controlling strict network traffic flow.
+🖼️ Monitoring & Observability (Grafana)
+A dedicated telemetry pipeline explicitly focused on cluster diagnostics and performance metrics visualization:
 
-Compute: High-performance EC2 instances optimized for cluster workloads.
+📊 Prometheus Targets & Alerts
+Verification of active endpoints scraping status and configured cluster threshold limits:
 
-⚙ Configuration Management
-Ansible automation playbooks remotely handle systemic environment setups:
-
-Installing and updating localized Docker dependencies.
-
-Provisioning, configuring, and initializing the K3s cluster.
-
-Setting up administrative tools, package requirements, and system utilities.
-
-Preparing the runtime orchestration environment for internal telemetry agents.
-
-☸ Kubernetes & Telemetry Deployment
-The application platform and monitoring layers run inside the managed K3s cluster ecosystem:
-
-Dynamic Storage: Automated Persistent Volumes for configuration storage.
-
-Self-Healing: Declarative deployment objects ensuring high uptime.
-
-Traffic Management: Dedicated NGINX Ingress configuration to manage routing paths securely.
-
-📊 Monitoring & Observability
-A dedicated, isolated telemetry pipeline explicitly focused on cluster diagnostics without external dependencies:
-
-Prometheus: Actively pulls platform and infrastructure performance metrics.
-
-Grafana: Provides custom metrics visualization through unified web dashboards.
-
-Tracked Performance Metrics
-System-wide CPU and Memory consumption.
-
-Node health parameters and physical disk usage profiles.
-
-Request delivery distributions and cluster network traffic.
-
-🖼️ Visual Dashboards & Verification
-Prometheus Targets & Alerts
-Verify active endpoints scraping status and configured cluster threshold limits:
-
-Grafana Analytics Dashboard
-Real-time status insights visualization for hosted services:
-
-🌐 User Request & Metric Flow
-
-
-User / Administrator
-        │
-     Browser
-        │
-  NGINX Ingress
-        │
-┌───────┴─────────────────────────────────┐
-│           K3s Cluster Runtime           │
-│                                         │
-│   Grafana Dashboard <── Prometheus      │
-│                            │ (Scrapes)  │
-│                            ▼            │
-│                 Food Delivery Platform  │
-└─────────────────────────────────────────┘
-
-⚙ Deployment
+⚙ Deployment Guide
 1. Provision AWS Resources
+Bash
 cd terraform/
 terraform init
 terraform apply -auto-approve
-
 2. Configure Node Environments
 Bash
 cd ../ansible/
@@ -195,32 +112,6 @@ kubectl apply -f monitoring/
 Bash
 kubectl get pods -A
 kubectl get svc -n monitoring
-✨ Features
-Automated Infrastructure as Code (Terraform).
-
-Dynamic Multi-Node System Provisioning (Ansible).
-
-Lightweight Cluster Orchestration via K3s.
-
-Dedicated, Localized Monitoring Engine (Prometheus).
-
-Customized Telemetry Visualization Dashboards (Grafana).
-
-Granular NGINX Ingress Resource Routing.
-
-Persistent Cluster Storage Architectures.
-
-📚 Future Improvements
-Automated HTTPS Integration using TLS Certificates.
-
-Horizontal Pod Autoscaler (HPA) for load adaptation.
-
-High-Availability External Load Balancers.
-
-Production Secret management integrations.
-
-Centralized cluster alerting notification engines.
-
 👨‍💻 Author
 Ahmed Hamed
 
@@ -231,5 +122,3 @@ GitHub: github.com/ahmed1707hamed-tech
 LinkedIn: linkedin.com/in/ahmed-hamed-340570364
 
 ⭐ If you found this project useful, don't forget to give it a Star!
-
-
