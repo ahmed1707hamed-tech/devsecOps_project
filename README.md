@@ -1,510 +1,235 @@
-# 🛡️ DevSecOps CI/CD Pipeline
+<div align="center">
 
-A complete **DevSecOps project** implementing an automated software delivery lifecycle from source code to secure Kubernetes deployment and monitoring.
+# 🍔 DevSecOps Pipeline Project
+### Cloud-Native Monitoring & Observability Stack on AWS
 
-The project integrates **CI/CD, security scanning, Docker, Kubernetes, Helm, Argo CD, Prometheus, Grafana, Terraform, and Ansible**.
+<p align="center">
+
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker)
+![Kubernetes](https://img.shields.io/badge/Kubernetes-K3s-326CE5?style=for-the-badge&logo=kubernetes)
+![Terraform](https://img.shields.io/badge/Terraform-7B42BC?style=for-the-badge&logo=terraform)
+![Ansible](https://img.shields.io/badge/Ansible-EE0000?style=for-the-badge&logo=ansible)
+![Prometheus](https://img.shields.io/badge/Prometheus-E6522C?style=for-the-badge&logo=prometheus)
+![Grafana](https://img.shields.io/badge/Grafana-F46800?style=for-the-badge&logo=grafana)
+![AWS](https://img.shields.io/badge/AWS-Free%20Tier-FF9900?style=for-the-badge&logo=amazonaws)
+
+</p>
+
+Production-ready, cloud-native monitoring stack providing end-to-end observability, automated infrastructure provisioning, and localized telemetry configuration for a food delivery application framework.
+
+</div>
 
 ---
 
-## 🏗️ Architecture
+# 📑 Table of Contents
 
-![DevSecOps Architecture](docs/images/devsecops-architecture.png)
+- Overview
+- Architecture
+- Tech Stack
+- Project Structure
+- Cloud Engineering Workflow
+- Infrastructure Provisioning
+- Configuration Management
+- Kubernetes & Telemetry Deployment
+- Monitoring & Observability
+- Visual Dashboards & Verification
+- User Request & Metric Flow
+- Deployment Guide
+- Features
+- Future Improvements
+- Author
 
-### Architecture Flow
+---
+
+# 🚀 Overview
+
+This project implements an automated, scalable infrastructure and localized monitoring framework for a food delivery platform. 
+
+The entire cloud architecture is provisioned on **AWS EC2** hosting a lightweight **K3s Kubernetes Cluster**. The system relies on Terraform for infrastructure as code, Ansible for automated system configuration, and a dedicated, production-grade telemetry pipeline built using Prometheus and Grafana to track runtime environments dynamically.
+
+---
+
+# 🏗 Architecture
+
+<p align="center">
+  <img src="docs/images/architecture.png" alt="Architecture Diagram" width="100%">
+</p>
+
+---
+
+# ⚡ Technology Stack
+
+| Layer | Technologies |
+| :--- | :--- |
+| **Infrastructure** | Terraform |
+| **Configuration** | Ansible |
+| **Orchestration** | K3s Kubernetes |
+| **Containers** | Docker |
+| **Ingress Control** | NGINX Ingress |
+| **Telemetry & Collection** | Prometheus |
+| **Visualization** | Grafana |
+| **Cloud Provider** | AWS (EC2, VPC, Security Groups) |
+
+---
+
+# 📁 Project Structure
 
 ```text
-Developer
-    │
-    ▼
-  GitHub
-    │
-    ▼
-GitHub Actions
-    │
-    ├── Pytest
-    ├── Gitleaks
-    ├── pip-audit
-    ├── Docker Build
-    └── Trivy
-          │
-          ▼
-      Docker Hub
-          │
-          ▼
-        Argo CD
-          │
-          ▼
-     Kubernetes
-       │      │
-       ▼      ▼
-    Backend PostgreSQL
-       │
-       ▼
-   Prometheus
-       │
-       ▼
-     Grafana
+devsecops-project
+│
+├── terraform/          # AWS Core Infrastructure Configuration
+├── ansible/            # Cluster Configuration & Tooling Playbooks
+├── k8s/                # Localized Core Kubernetes Manifests
+├── monitoring/         # Prometheus & Grafana Configuration Files
+└── docs/
+    └── images/         # Documentation & Dashboard Screenshots
 
-🚀 Project Overview
+````
 
-This project demonstrates a production-style DevSecOps workflow where security is integrated throughout the software development and deployment lifecycle.
+Cloud Engineering Workflow
 
-The pipeline automatically:
-
-Runs application tests.
-Scans the repository for exposed secrets.
-Scans Python dependencies for vulnerabilities.
-Builds a Docker image.
-Scans the Docker image using Trivy.
-Pushes the validated image to Docker Hub.
-Uses Argo CD for GitOps-based deployment.
-Deploys the application to Kubernetes.
-Monitors the cluster and application using Prometheus and Grafana.
+Terraform Infrastructure Provisioning
+                 │
+                 ▼
+Ansible Cluster Node Configuration
+                 │
+                 ▼
+K3s Kubernetes Cluster Deployment
+                 │
+                 ▼
+Target Application Framework Initialization
+                 │
+                 ▼
+Prometheus & Grafana Localized Stack Launch
+                 │
+                 ▼
+Active Metrics Scraping & Dashboard Visualization
 
 
 
-| Security Stage      | Tool      | Purpose                                 |
-| ------------------- | --------- | --------------------------------------- |
-| Automated Testing   | Pytest    | Validate application functionality      |
-| Secret Scanning     | Gitleaks  | Detect exposed secrets                  |
-| Dependency Scanning | pip-audit | Detect vulnerable Python packages       |
-| Container Scanning  | Trivy     | Detect vulnerabilities in Docker images |
+Infrastructure Provisioning
+Cloud infrastructure automation is fully handled via Terraform, deploying isolated network environments on AWS:
 
+VPC & Subnets: Custom public and private network spaces.
 
+Gateways & Routing: Internet Gateways linked with active Route Tables.
 
+Firewalls: Dynamic Security Groups controlling strict network traffic flow.
 
+Compute: High-performance EC2 instances optimized for cluster workloads.
 
-⚙️ GitHub Actions
+⚙ Configuration Management
+Ansible automation playbooks remotely handle systemic environment setups:
 
-The CI/CD workflow is implemented using GitHub Actions.
+Installing and updating localized Docker dependencies.
 
-Pipeline Stages
-Code Push
-    │
-    ▼
-Checkout
-    │
-    ▼
-Pytest
-    │
-    ├──────────────┐
-    ▼              ▼
-Gitleaks       pip-audit
-    │              │
-    └──────┬───────┘
-           ▼
-      Docker Build
-           │
-           ▼
-       Trivy Scan
-           │
-           ▼
-       Docker Hub
-Workflow
-Checkout source code
-Setup Python 3.12
-Install dependencies
-Run Pytest
-Run Gitleaks
-Run pip-audit
-Build Docker image
-Scan Docker image with Trivy
-Login to Docker Hub
-Push Docker image
-🐳 Docker
+Provisioning, configuring, and initializing the K3s cluster.
 
-The backend application is containerized using Docker.
+Setting up administrative tools, package requirements, and system utilities.
 
-Docker Build
-     │
-     ▼
-Trivy Security Scan
-     │
-     ▼
-Docker Hub
-     │
-     ▼
-Kubernetes
-Docker Image
-ahmed7amed9/devsecops-backend:latest
+Preparing the runtime orchestration environment for internal telemetry agents.
 
-The Docker image is automatically built and published through GitHub Actions after passing the required security and testing stages.
+☸ Kubernetes & Telemetry Deployment
+The application platform and monitoring layers run inside the managed K3s cluster ecosystem:
 
-☸️ Kubernetes
+Dynamic Storage: Automated Persistent Volumes for configuration storage.
 
-The application is deployed on Kubernetes.
+Self-Healing: Declarative deployment objects ensuring high uptime.
 
-Kubernetes Components
-Deployment
-Pods
-Services
-ConfigMaps
-Secrets
-Namespace
-Helm
-Resource Requests and Limits
-Application Namespace
-devsecops
-Running Services
-devsecops-backend
-devsecops-postgres
-Backend Deployment
-
-The backend is configured with multiple replicas for improved availability.
-
-Backend Replicas: 3
-Backend Service
-Type: NodePort
-Port: 8000
-NodePort: 30080
-⎈ Helm
-
-Helm is used to package and manage the Kubernetes application.
-
-Helm Structure
-helm/
-└── devsecops/
-    ├── Chart.yaml
-    ├── values.yaml
-    └── templates/
-        ├── backend-deployment.yaml
-        ├── backend-service.yaml
-        ├── postgres-deployment.yaml
-        ├── postgres-service.yaml
-        └── namespace.yaml
-Helm Configuration
-
-The application configuration is controlled through values.yaml.
-
-Example:
-
-backend:
-  replicaCount: 3
-
-  image:
-    repository: ahmed7amed9/devsecops-backend
-    tag: latest
-
-  service:
-    type: NodePort
-    port: 8000
-    targetPort: 8000
-    nodePort: 30080
-🔁 GitOps with Argo CD
-
-Argo CD is used to implement GitOps-based Continuous Delivery.
-
-Argo CD continuously monitors the GitHub repository and synchronizes the Kubernetes cluster with the desired state stored in Git.
-
-Argo CD Application
-Application: devsecops
-Namespace: argocd
-Source: GitHub
-Path: helm/devsecops
-Target Revision: main
-Destination: Kubernetes Cluster
-Current Status
-Sync Status: Synced
-Health Status: Healthy
-
-This provides automated and reliable Kubernetes deployments whenever the desired state changes in Git.
+Traffic Management: Dedicated NGINX Ingress configuration to manage routing paths securely.
 
 📊 Monitoring & Observability
+A dedicated, isolated telemetry pipeline explicitly focused on cluster diagnostics without external dependencies:
 
-The Kubernetes environment is monitored using:
+Prometheus: Actively pulls platform and infrastructure performance metrics.
 
-Prometheus
-Grafana
-Kubernetes Metrics
-Node Exporter
-kube-state-metrics
-Monitoring Architecture
-Kubernetes
-     │
-     ├── Nodes
-     ├── Pods
-     ├── Deployments
-     └── Services
-          │
-          ▼
-      Prometheus
-          │
-          ▼
-       Grafana
-🔎 Prometheus
+Grafana: Provides custom metrics visualization through unified web dashboards.
 
-Prometheus collects metrics from the Kubernetes cluster and application workloads.
+Tracked Performance Metrics
+System-wide CPU and Memory consumption.
 
-It monitors:
+Node health parameters and physical disk usage profiles.
 
-Kubernetes Nodes
-Pods
-Deployments
-CPU Usage
-Memory Usage
-Application Metrics
-Kubernetes Components
+Request delivery distributions and cluster network traffic.
 
-📈 Grafana
+🖼️ Visual Dashboards & Verification
+Prometheus Targets & Alerts
+Verify active endpoints scraping status and configured cluster threshold limits:
 
-Grafana is used to visualize the collected Prometheus metrics.
+Grafana Analytics Dashboard
+Real-time status insights visualization for hosted services:
 
-Dashboards provide visibility into:
+🌐 User Request & Metric Flow
 
-CPU Usage
-Memory Usage
-Pod Status
-Node Metrics
-Request Rate
-Kubernetes Resources
-Application Performance
-📡 Application Metrics
 
-The backend exposes a Prometheus metrics endpoint:
+User / Administrator
+        │
+     Browser
+        │
+  NGINX Ingress
+        │
+┌───────┴─────────────────────────────────┐
+│           K3s Cluster Runtime           │
+│                                         │
+│   Grafana Dashboard <── Prometheus      │
+│                            │ (Scrapes)  │
+│                            ▼            │
+│                 Food Delivery Platform  │
+└─────────────────────────────────────────┘
 
-/metrics
+⚙ Deployment
+1. Provision AWS Resources
+cd terraform/
+terraform init
+terraform apply -auto-approve
 
-Metrics flow:
+2. Configure Node Environments
+Bash
+cd ../ansible/
+ansible-playbook -i inventory.ini site.yml
+3. Deploy Kubernetes & Telemetry Components
+Bash
+kubectl apply -f k8s/
+kubectl apply -f monitoring/
+4. Verify System Deployment
+Bash
+kubectl get pods -A
+kubectl get svc -n monitoring
+✨ Features
+Automated Infrastructure as Code (Terraform).
 
-Backend
-   │
-   ├── /metrics
-   │
-   ▼
-Prometheus
-   │
-   ▼
-Grafana
+Dynamic Multi-Node System Provisioning (Ansible).
 
-This allows application-level monitoring in addition to infrastructure monitoring.
+Lightweight Cluster Orchestration via K3s.
 
-🗄️ PostgreSQL
+Dedicated, Localized Monitoring Engine (Prometheus).
 
-PostgreSQL is used as the application's database.
+Customized Telemetry Visualization Dashboards (Grafana).
 
-Database: taskdb
-User: postgres
-Port: 5432
-Service: devsecops-postgres
+Granular NGINX Ingress Resource Routing.
 
-The PostgreSQL service is exposed internally through a Kubernetes ClusterIP service and is accessible by the backend inside the cluster.
+Persistent Cluster Storage Architectures.
 
-🏗️ Infrastructure as Code
+📚 Future Improvements
+Automated HTTPS Integration using TLS Certificates.
 
-Terraform is used for infrastructure provisioning.
+Horizontal Pod Autoscaler (HPA) for load adaptation.
 
-Terraform
-    │
-    ├── VPC
-    ├── Subnets
-    ├── Internet Gateway
-    ├── Route Tables
-    ├── Security Groups
-    └── EC2
+High-Availability External Load Balancers.
 
-Terraform allows infrastructure to be defined and managed as code, providing reproducible infrastructure deployments.
+Production Secret management integrations.
 
-⚙️ Configuration Management
-
-Ansible is used for automated server configuration and environment preparation.
-
-Typical tasks include:
-
-Installing Docker
-Installing Kubernetes
-Configuring servers
-Creating users
-Configuring firewall rules
-Installing required tools
-Preparing deployment environments
-🧰 Technologies
-Category	Technologies
-Source Control	Git, GitHub
-CI/CD	GitHub Actions
-Security	Gitleaks, Trivy, pip-audit
-Testing	Pytest
-Containerization	Docker
-Registry	Docker Hub
-Orchestration	Kubernetes
-Package Management	Helm
-GitOps	Argo CD
-Monitoring	Prometheus
-Visualization	Grafana
-Infrastructure as Code	Terraform
-Configuration Management	Ansible
-Backend	FastAPI
-Database	PostgreSQL
-📂 Project Structure
-devsecops-project/
-│
-├── .github/
-│   └── workflows/
-│       └── ci.yml
-│
-├── backend/
-│   ├── app/
-│   ├── tests/
-│   ├── requirements.txt
-│   └── Dockerfile
-│
-├── helm/
-│   └── devsecops/
-│       ├── Chart.yaml
-│       ├── values.yaml
-│       └── templates/
-│           ├── backend-deployment.yaml
-│           ├── backend-service.yaml
-│           ├── postgres-deployment.yaml
-│           ├── postgres-service.yaml
-│           └── namespace.yaml
-│
-├── terraform/
-│   ├── main.tf
-│   ├── variables.tf
-│   └── outputs.tf
-│
-├── ansible/
-│   ├── inventory/
-│   ├── playbooks/
-│   └── roles/
-│
-├── monitoring/
-│   ├── prometheus/
-│   └── grafana/
-│
-├── docs/
-│   └── images/
-│       ├── devsecops-architecture.png
-│       ├── github-actions-pipeline.png
-│       ├── argocd.png
-│       ├── prometheus-targets.png
-│       └── grafana-dashboard.png
-│
-├── docker-compose.yml
-└── README.md
-🔄 Complete DevSecOps Flow
-                       ┌──────────────┐
-                       │   Developer  │
-                       └──────┬───────┘
-                              │
-                           Git Push
-                              │
-                              ▼
-                       ┌──────────────┐
-                       │    GitHub    │
-                       └──────┬───────┘
-                              │
-                              ▼
-                    ┌──────────────────┐
-                    │  GitHub Actions  │
-                    └────────┬─────────┘
-                             │
-              ┌──────────────┼──────────────┐
-              ▼              ▼              ▼
-           Pytest         Gitleaks      pip-audit
-              │              │              │
-              └──────────────┼──────────────┘
-                             ▼
-                       Docker Build
-                             │
-                             ▼
-                        Trivy Scan
-                             │
-                             ▼
-                        Docker Hub
-                             │
-                             ▼
-                         Argo CD
-                             │
-                             ▼
-                       Kubernetes
-                        │       │
-                        ▼       ▼
-                     Backend PostgreSQL
-                        │
-                        ▼
-                    Prometheus
-                        │
-                        ▼
-                      Grafana
-🛡️ Security Lifecycle
-
-Security is implemented throughout the software delivery lifecycle.
-
-Source Code
-     │
-     ▼
-Secret Scan
-     │
-     ▼
-Dependency Scan
-     │
-     ▼
-Automated Tests
-     │
-     ▼
-Docker Build
-     │
-     ▼
-Trivy Image Scan
-     │
-     ▼
-Secure Docker Image
-     │
-     ▼
-Docker Hub
-     │
-     ▼
-Kubernetes
-🎯 Key Features
-✅ Automated CI/CD Pipeline
-✅ Automated Testing
-✅ Secret Detection
-✅ Dependency Vulnerability Scanning
-✅ Docker Image Security Scanning
-✅ Containerized Backend
-✅ Kubernetes Deployment
-✅ Three Backend Replicas
-✅ Helm-based Deployment
-✅ GitOps with Argo CD
-✅ Infrastructure as Code with Terraform
-✅ Configuration Management with Ansible
-✅ Prometheus Monitoring
-✅ Grafana Dashboards
-✅ Application Metrics
-✅ Automated Docker Image Publishing
-✅ PostgreSQL Database
-✅ Kubernetes Resource Management
-📸 Project Screenshots
-GitHub Actions
-
-Argo CD
-
-Prometheus
-
-Grafana
-
-Architecture
+Centralized cluster alerting notification engines.
 
 👨‍💻 Author
+Ahmed Hamed
 
-Ahmed Mohammed Hamed
+Cloud Engineer
 
-Cloud & DevOps Engineer
+GitHub: github.com/ahmed1707hamed-tech
 
-GitHub: ahmed1707hamed-tech
+LinkedIn: linkedin.com/in/ahmed-hamed-340570364
 
-⭐ Project Highlights
-
-This project demonstrates a complete DevSecOps workflow combining:
-
-CI/CD + Security + Docker + Kubernetes + Helm + GitOps + Monitoring + Terraform + Ansible
-
-The workflow starts from a developer pushing code to GitHub and continues through automated testing, security validation, Docker image publishing, GitOps deployment with Argo CD, Kubernetes orchestration, and real-time monitoring using Prometheus and Grafana.
-
-
-
-
-
+⭐ If you found this project useful, don't forget to give it a Star!
 
 
