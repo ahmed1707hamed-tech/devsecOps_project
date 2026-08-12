@@ -125,9 +125,7 @@ Grafana
 
 # 🔄 DevSecOps Workflow
 
-<p align="center">
-<img src="docs/images/github-actions-pipeline.png width="100%">
-</p>
+
 
 The complete DevSecOps workflow is:
 
