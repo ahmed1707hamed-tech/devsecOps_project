@@ -1,0 +1,50 @@
+namespace:
+  create: false
+  name: devsecops
+
+backend:
+  replicaCount: 2
+
+  image:
+    repository: ahmed7amed9/devsecops-backend
+    tag: v2
+    pullPolicy: Always
+
+  service:
+    type: NodePort
+    port: 8000
+    targetPort: 8000
+    nodePort: 30080
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+
+postgres:
+  image:
+    repository: postgres
+    tag: 16-alpine
+    pullPolicy: IfNotPresent
+
+  database: taskdb
+  username: postgres
+  password: postgres
+
+  service:
+    port: 5432
+
+  storage:
+    size: 2Gi
+    storageClass: standard
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi

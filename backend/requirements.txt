@@ -7,3 +7,4 @@ PyJWT
 pwdlib[argon2]
 pytest
 httpx
+prometheus-fastapi-instrumentator
